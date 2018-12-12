@@ -1,0 +1,143 @@
+﻿SignalR + Fallback mechanism:
+	- Web sockets
+	- server sent events
+	- forever frame
+	- long polling
+
+What protocol does SignalR use? 
+	HTTP/SSL and MessagePack Hub protocol
+
+When is Ajax longpolling used?
+	If browser is IE8 or earlier - long polling
+	if jsonp is configured true - long polling
+	if cross-domain - web socket is used - if CORS and client/server side support
+
+Polyfill javascript functions
+	new js features now work on older browsers thanks to polyfills
+	Checks if Promise API is available (not in IE11 or earlier), because it relies on promises to work
+	- if not - loads a script from a CDN that polyfills the Promise API, same for fetch API
+	Script tag helper - <script src=".js" asp-fallback-src="local.js" asp-fallback-test="window.jquery" </scirpt>
+
+ITelemteryProcessor and TelemeteryContext
+	public class SomeTelemetryProcessor : ITelemetryProcessor
+	{
+  	  	private readonly ITelemetryProcessor _next;
+
+    		public SomeTelemetryProcessor(ITelemetryProcessor next)
+    		{
+        		_next = next;
+    		}
+
+    		public void Process(ITelemetry item)
+    		{
+       	 		// ... do stuff ...
+
+      	  		_next.Process(item);
+    		}
+	}
+	
+	Registration:
+	custom ITelemetryProcessor can then be registered in ApplicationInsights.config
+	In an OWIN web application this could be in the Startup.cs file. In a “classic” ASP.NET web application this could be in Global.asax
+
+JWTBearer token and middleware authentication
+	- by presenting a valid token you will be automatically authenticated, without having to match or present any additional signature or details to prove it was granted to you
+	- presented to a remote server using the HTTP Authorization header
+	- A JSON Web Token (JWT) is a web standard that defines a method for transferring claims as a JSON object in such a way that they can be cryptographically signed or encrypted
+	- JWT consist:
+		- header - type of token
+		- payload - claims
+		- signature - combo of upper 2 + secret -> used for verification
+	- namespace - Microsoft.AspNetCore.Authentication.JwtBearer
+	- usage:
+		app.UseJwtBearerAuthentication(new JwtBearerOptions
+		{ options config } });
+	- https://andrewlock.net/a-look-behind-the-jwt-bearer-authentication-middleware-in-asp-net-core/
+
+Nginx - https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/linux-nginx?view=aspnetcore-2.1&tabs=aspnetcore2x
+	- Invoke the UseForwardedHeaders method in Startup.Configure before calling UseAuthentication 
+	- apt-get to install Nginx
+	- configure nginx 
+	server {
+    		listen   80 default_server;
+    		# listen [::]:80 default_server deferred;
+    		return   444;
+	}
+	- run sudo nginx -t
+	- run the app dotnet <app_assembly.dll>
+Http/2
+	- HTTP/2 enables a more efficient use of network resources and a reduced perception of latency by introducing header field compression and allowing multiple concurrent exchanges on the same connection. It also introduces unsolicited push of representations from servers to clients.
+	- HTTP/2 is enabled for ASP.NET Core apps if the following base requirements are met:
+		Windows Server 2016/Windows 10 or later
+		Application-Layer Protocol Negotiation (ALPN) connection
+		TLS 1.2 or later connection
+	otherwise it falls back to HTTP/1.1
+
+SignlaR 4 fallback mechanisms
+ITelemertyProcessor
+Polifills js in ASP
+
+running Grunt task in Visual Studio
+	- Grunt - for minifying and combining multiple scripts/styles into single file
+	Add External Tool
+	Go to External Tools under Tools menu in Visual Studio
+	Click on Add, write following details:
+
+		Title: Grunt  
+		Command : C:\Windows\System32\cmd.exe
+		Arguments: /k grunt
+		Initial Directory: $(ProjectDir)
+
+		Optionally, check **Use Output Directory** option.
+
+
+DevTest Labs in Azure
+	- Azure DevTest Labs is a service that helps developers and testers quickly create environments in Azure while minimizing waste and controlling cost. 
+	- Scale up your load testing by provisioning multiple test agents, and create pre-provisioned environments for training and demos.
+	
+
+Test server ASP core
+Remote debugging in Server explorer
+	- https://docs.microsoft.com/en-us/visualstudio/debugger/remote-debugging-aspnet-on-a-remote-iis-computer?view=vs-2017
+
+Setting up docker container:
+	FROM microsoft/dotnet:aspnetcore-runtime
+	WORKDIR /app
+	COPY --from=build-env /app/out .
+	ENTRYPOINT ["dotnet", "aspnetapp.dll"]
+
+	$ docker build -t aspnetapp .
+	$ docker run -d -p 8080:80 --name myapp aspnetapp
+
+setup YAML as the config language of your project --> кой интерфейс се наследява
+	- IConfigurationSource или base FileConfigurationSourcе
+	public class YamlConfigurationSource : FileConfigurationSource
+	{
+    		public override IConfigurationProvider Build(IConfigurationBuilder builder)
+    		{
+        		FileProvider = FileProvider ?? builder.GetFileProvider();
+        		return new YamlConfigurationProvider(this);
+    		}
+	}
+
+SignalR Fallback --> ( web socket --> user events --> forever frame --> longpolling )
+
+Claims based authentication --> setup claim for role in AD from another company
+	- https://docs.microsoft.com/en-us/aspnet/core/security/authorization/claims?view=aspnetcore-2.1
+
+Cookie authentication --> config file setup за използване на cookies
+	- https://docs.microsoft.com/en-us/aspnet/core/security/authentication/cookie?view=aspnetcore-2.1&tabs=aspnetcore2x
+	services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    		.AddCookie(options =>
+    		{
+      		  ...
+    		});
+
+config file for authentication containing info like this -> "а123к-222"; IModelBinding, Type converter class etc.
+
+-> custom authentication provider 
+-> DevTest Labs in Azure - https://www.youtube.com/watch?v=caO7AzOUxhQ;
+->  Azure DevTest Labs - setup environment for WebAPI project and front-end project - one answer per project, possible answers - Azure container service, azure container, Formula and something else. I used formula and azure container service
+-> The application will be tested on Acceptance environment which will be exactly the same as production environment. You need to secure the configurations. 
+What will you use? 
+-> Yes/No questions with Input/OutputFormatter

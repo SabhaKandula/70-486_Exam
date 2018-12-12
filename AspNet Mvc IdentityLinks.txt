@@ -1,0 +1,24 @@
+https://www.tutorialspoint.com/asp.net_mvc/asp.net_mvc_security.htm
+https://www.c-sharpcorner.com/article/custom-authentication-with-asp-net-mvc/
+https://techfunda.com/howto/asp-net-mvc/authentication-and-authorization
+https://www.dotnetcurry.com/aspnet-mvc/1229/user-authentication-aspnet-mvc-6-identity
+http://www.tutorialsteacher.com/mvc/partial-view-in-asp.net-mvc
+
+
+https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-2.1&tabs=visual-studio
+https://docs.microsoft.com/en-us/aspnet/identity/overview/getting-started/introduction-to-aspnet-identity
+https://docs.microsoft.com/en-us/aspnet/visual-studio/overview/2013/creating-web-projects-in-visual-studio#auth
+https://docs.microsoft.com/en-us/aspnet/core/security/authorization/secure-data?view=aspnetcore-2.1
+
+
+https://docs.microsoft.com/en-us/aspnet/mvc/overview/security/create-an-aspnet-mvc-5-web-app-with-email-confirmation-and-password-reset
+https://docs.microsoft.com/en-us/aspnet/core/security/authentication/accconfirm?view=aspnetcore-2.1&tabs=visual-studio#configure-email-provider
+https://docs.microsoft.com/en-us/aspnet/mvc/overview/security/create-an-aspnet-mvc-5-app-with-facebook-and-google-oauth2-and-openid-sign-on
+
+
+
+https://docs.microsoft.com/en-us/aspnet/core/mvc/views/partial?view=aspnetcore-2.1
+
+Practice Tests 
+https://examref.com/
+https://www.freecram.com/exam/70-486-developing-asp.net-mvc-4-web-applications-e5370.html
